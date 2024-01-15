@@ -1,0 +1,29 @@
+{
+  "name": "fragments-ui",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Fragments UI testing web app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aanand058/fragments-ui.git"
+  },
+  "keywords": [],
+  "author": "Aanand Aman",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/Aanand058/fragments-ui/issues"
+  },
+  "homepage": "https://github.com/Aanand058/fragments-ui#readme",
+  "dependencies": {
+    "aws-amplify": "^5.0.0"
+  },
+  "devDependencies": {
+    "buffer": "^6.0.3",
+    "parcel": "^2.11.0",
+    "process": "^0.11.10"
+  }
+}

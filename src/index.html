@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>Fragments UI</title>
     <link rel="stylesheet" href="https://unpkg.com/bamboo.css" />
-    <script type="module" src="/src/app.js"></script>
+    <script type="module" src="./app.js"></script>
 </head>
 
 <body>
@@ -15,7 +15,39 @@
     </section>
     <section hidden id="user">
         <h2>Hello <span class="username"></span>!</h2>
+
+
+        <br>
+        <strong>Retrieve your fragments:</strong>
+        <br>
+        <button type="submit" id="getBtn"> GET list of fragments </button>
+        <br><br>
+        <button type="submit" id="getListBtn"> GET list of fragments metadata</button>
+        <br />
+        <br>
+        <strong>Find the fragment by ID:</strong>
+        <input type="text" id="id" placeholder="Enter fragment's ID" />
+        <br /><br />
+        <button type="submit" id="getByIdBtn"> GET fragment's data </button>
+        <button type="submit" id="getInfoByIdBtn"> GET metadata </button>
+
+        <br><br>
+        <strong>Create Fragment:</strong>
+        <label>Choose a type for the fragment:</label>
+        <select name="types" id="types" required>
+            <option value="text/plain">text/plain</option>
+        </select>
+        <hr />
+
+        <textarea type="text" id="data" placeholder="Enter fragment's data for posting or updating"></textarea>
+        <button type="submit" id="postBtn"> POST </button>
+        <div id="returnedData"></div>
+
     </section>
+
+
+
+
 </body>
 
 </html>

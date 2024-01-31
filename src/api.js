@@ -1,7 +1,7 @@
 // src/api.js
 
 
-const apiUrl = process.env.API_URL ;
+const apiUrl = process.env.API_URL;
 
 /**
  * Given an authenticated user, request all fragments for this user from the
@@ -23,8 +23,8 @@ export async function getUserFragments(user) {
     const data = await res.json();
     console.log('Successfully got user fragments data', { data });
     return data;
-  } catch (err) {
-    console.error('Unable to call GET /v1/fragment', { err });
+  } catch (error) {
+    console.error('Unable to call GET /v1/fragment', { error });
   }
 }
 
@@ -48,7 +48,7 @@ export async function postUserFragments(user, data, type) {
     console.log('Posted user fragments data: ', data);
     console.log(res);
   } catch (err) {
-    console.error('Unable to  POST /v1/fragments', { err });
+    console.error('Unable to  call POST /v1/fragments', { err });
   }
 }
 
@@ -65,18 +65,17 @@ export async function getUserFragmentList(user) {
     }
 
     const data = await res.json();
-    console.log('Received user fragments list', { data });
-  } catch (err) {
-    console.log('Unable to call GET /v1/fragments/?expand=1', { err });
+    console.log('Fragments list', { data });
+  } catch (error) {
+    console.log('Unable to call GET /v1/fragments/?expand=1', { error });
   }
 }
 
 
 export async function getFragmentDataByID(user, id) {
+  console.log('Requesting user fragment data by ID...');
   try {
     if (id != "") {
-      console.log(`Requesting user fragment data by ID...`);
-      console.log(`Fetching ${apiUrl}/v1/fragments/${id}`);
       const res = await fetch(`${apiUrl}/v1/fragments/${id}`, {
         headers: user.authorizationHeaders(),
       });
@@ -90,23 +89,23 @@ export async function getFragmentDataByID(user, id) {
       if (type.includes("text")) {
         const data = await res.text();
         console.log(`Received user fragment by ID: ${id}`, { data });
-        document.getElementById("returnedData").innerHTML = data;
+
       }
     } else {
-      document.getElementById("returnedData").textContent = "Error: ID required";
+
       console.log("Error: ID required");
     }
-  } catch (err) {
-    console.log(`Unable to call GET /v1/fragments/${id}`, { err });
+  } catch (error) {
+    console.log(`Unable to call GET /v1/fragments/${id}`, { error });
   }
 }
 
 
 export async function getFragmentInfoByID(user, id) {
+  console.log('Requesting user fragment info by ID...');
   try {
     if (id != "") {
-      console.log(`Requesting user fragment info by ID...`);
-      console.log(`Fetching ${apiUrl}/v1/fragments/${id}/info`);
+
       const res = await fetch(`${apiUrl}/v1/fragments/${id}/info`, {
         headers: user.authorizationHeaders(),
       });
@@ -117,12 +116,14 @@ export async function getFragmentInfoByID(user, id) {
 
       const data = await res.json();
       console.log(`Received user fragment info by ID: ${id}`, { data });
+      const type = res.headers.get("Content-Type");
+      
     } else {
-      document.getElementById("returnedData").textContent = "Error: ID required";
+
       console.log("Error: ID required");
     }
-  } catch (err) {
-    console.log(`Unable to call GET /v1/fragments/${id}/info`, { err });
+  } catch (error) {
+    console.log(`Unable to call GET /v1/fragments/${id}/info`, { error });
   }
 }
 

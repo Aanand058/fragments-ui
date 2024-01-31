@@ -43,9 +43,6 @@ async function init() {
   // Do an authenticated request to the fragments API server and log the result
   const userFragments = await getUserFragments(user);
 
-
-
-
   postBtn.onclick = () => {
     let data = document.querySelector('#data').value;
     let type = document.querySelector('#types').value;
@@ -62,10 +59,7 @@ async function init() {
   }
 
 
-  getByIdBtn.onclick = () => {
-    let id = document.querySelector('#id').value;
-    getFragmentDataByID(user, id);
-  }
+ 
 
   getInfoByIdBtn.onclick = () => {
     let id = document.querySelector('#id').value;

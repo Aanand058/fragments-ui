@@ -3,10 +3,10 @@
   "private": true,
   "version": "0.0.1",
   "description": "Fragments UI testing web app",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"parcel src/index.html"
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html"
   },
   "repository": {
     "type": "git",
@@ -23,8 +23,11 @@
     "aws-amplify": "^5.0.0"
   },
   "devDependencies": {
+    "@parcel/watcher": "^2.4.1",
     "buffer": "^6.0.3",
     "parcel": "^2.11.0",
-    "process": "^0.11.10"
+    "process": "^0.11.10",
+    "punycode": "^1.4.1",
+    "querystring-es3": "^0.2.1"
   }
 }

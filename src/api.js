@@ -3,6 +3,7 @@
 
 const apiUrl = process.env.API_URL;
 
+
 /**
  * Given an authenticated user, request all fragments for this user from the
  * fragments microservice (currently only running locally). We expect a user

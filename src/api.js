@@ -11,6 +11,7 @@ const apiUrl = process.env.API_URL;
  */
 export async function getUserFragments(user) {
   console.log('Requesting user fragments data...');
+ 
   try {
     const res = await fetch(`${apiUrl}/v1/fragments`, {
       // Generate headers with the proper Authorization bearer token to pass.
@@ -128,3 +129,61 @@ export async function getFragmentInfoByID(user, id) {
   }
 }
 
+
+export async function deleteFragmentDataByID(user, id) {
+  try {
+    if (id != "") {
+      console.log(`Deleting fragment info by ID: ${id}`);
+      const res = await fetch(`${apiUrl}/v1/fragments/${id}`, {
+        method: "delete",
+        headers: user.authorizationHeaders(),
+      });
+
+      if (!res.ok) {
+        throw new Error(`${res.status} ${res.statusText}`);
+      }
+
+      console.log(`Successfully deleted fragment by ID: ${id}`);
+      console.log(res);
+    } else {
+      document.getElementById("returnedData").textContent = "Error: ID required";
+      console.log("Error: ID required");
+    }
+  } catch (err) {
+    console.log(`Unable to  DELETE /v1/fragments/${id}`, { err });
+  }
+}
+
+
+
+export async function updateFragmentByID(user, data, type, id) {
+  try {
+    if (id != "") {
+      console.log(`Updating  fragment data by ID: ${id}`);
+      if (type == 'application/json'){
+        data = JSON.parse(JSON.stringify(data));
+      }
+
+      const res = await fetch(`${apiUrl}/v1/fragments/${id}`, {
+        method: "put",
+        headers: {
+          Authorization: `Bearer ${user.idToken}`,
+          'Content-type': type,
+        },
+        body: data
+      });
+
+      if (!res.ok) {
+        throw new Error(`${res.status} ${res.statusText}`);
+      }
+
+      console.log(`Updated fragment data by ID: ${id}`, { data });
+      console.log(res);
+    } else {
+      document.getElementById("returnedData").textContent = "Error: ID required";
+      console.log("Error: ID required");
+    }
+  } catch (err) {
+    console.log(`Unable to  PUT /v1/fragments/${id}`, { err });
+  }
+}

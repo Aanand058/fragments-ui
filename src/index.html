@@ -25,11 +25,15 @@
         <button type="submit" id="getListBtn"> GET list of fragments info</button>
         <br />
         <br>
+
+
         <strong>Find the fragment by ID:</strong>
         <input type="text" id="id" placeholder="Enter fragment's ID" />
         <br /><br />
         
         <button type="submit" id="getInfoByIdBtn"> GET info </button>
+        <button type="submit" id="getInfoByIdBtn"> GET metadata </button>
+        <button type="submit" id="deleteBtn"> DELETE fragment </button>
 
         <br><br>
         <strong>Create Fragment:</strong>
@@ -44,8 +48,18 @@
 
         <textarea type="text" id="data" placeholder="Enter fragment's data for posting"></textarea>
         <button type="submit" id="postBtn"> POST </button>
+        <button type="submit" id="updateBtn"> UPDATE </button>
         <br><br></br>
       
+        <strong>Create Image Fragment:</strong>
+        <input type="file" name="file" id="file"/>
+        <button id="uploadImageBtn"> UPLOAD image file </button>
+        <button id="updateImageBtn"> UPDATE image file </button>      
+  
+        <h4 id="result"> Received Fragment Data: </h4>
+        <div id="returnedData"></div>
+        <img id="image"/>
+
 
     </section>
 

@@ -5,7 +5,7 @@ import { Auth, getUser } from './auth';
 import { getUserFragments } from './api';
 
 
-import { getUserFragments, getUserFragmentList, postUserFragments, getFragmentDataByID, getFragmentInfoByID } from './api';
+import { getUserFragments, getUserFragmentList, postUserFragments, getFragmentDataByID, getFragmentInfoByID, deleteFragmentDataByID, updateFragmentByID } from './api';
 
 async function init() {
   // Get our UI elements

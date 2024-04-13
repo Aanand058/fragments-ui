@@ -4,15 +4,18 @@
 <head>
     <meta charset="utf-8" />
     <title>Fragments UI</title>
-    <link rel="stylesheet" href="https://unpkg.com/bamboo.css" />
+
     <script type="module" src="./app.js"></script>
 </head>
 
 <body>
+
     <h1>Fragments UI</h1>
+
     <section>
         <nav><button id="login">Login</button> <button id="logout">Logout</button></nav>
     </section>
+
     <section hidden id="user">
         <h2>Hello <span class="username"></span>!</h2>
 
@@ -30,9 +33,9 @@
         <strong>Find the fragment by ID:</strong>
         <input type="text" id="id" placeholder="Enter fragment's ID" />
         <br /><br />
-        
+
         <button type="submit" id="getInfoByIdBtn"> GET info </button>
-        <button type="submit" id="getInfoByIdBtn"> GET metadata </button>
+
         <button type="submit" id="deleteBtn"> DELETE fragment </button>
 
         <br><br>
@@ -50,18 +53,62 @@
         <button type="submit" id="postBtn"> POST </button>
         <button type="submit" id="updateBtn"> UPDATE </button>
         <br><br></br>
-      
+
+        <hr/>
         <strong>Create Image Fragment:</strong>
-        <input type="file" name="file" id="file"/>
+        <input type="file" name="file" id="file" />
         <button id="uploadImageBtn"> UPLOAD image file </button>
-        <button id="updateImageBtn"> UPDATE image file </button>      
-  
-        <h4 id="result"> Received Fragment Data: </h4>
-        <div id="returnedData"></div>
-        <img id="image"/>
+        <button id="updateImageBtn"> UPDATE image file </button>
+
+       <hr />
+
+       <form id="editForm">
+        <label for="fragmentID">Enter the fragment ID you want to edit:</label>
+        <input type="text" id="fragmentID" name="fragmentID" />
+        <label for="editType">Enter the type:</label>
+        <input type="text" id="editType" name="editType" />
+        <label for="editContent">Enter the content:</label>
+        <input type="text" id="editContent" name="editContent" />
+        <label for="editFile">Or Upload File</label>
+        <input type="file" id="editFile" name="editFile" />
+        <br /><br />
+        <input type="submit" value="Edit" />
+      </form>
+      <br /><br />
+      <form id="convertForm">
+        <label for="convertID">Enter the fragment ID want to convert:</label>
+        <input type="text" name="convertID" id="convertID">
+        <label for="contentType">Enter current type:</label>
+        <input type="text" name="contentType" id="contentType">
+        <label for="convertEXT">Enter the extension:</label>
+        <input type="text" name="convertEXT" id="convertEXT">
+        <br /><br />
+
+        <input type="submit" />
+      </form>
 
 
+       
+
+
+        <br><br>
+        <hr/>
+
+        <section>
+
+            <button id="expand">View existing fragments</button>
+            <button id="expand2">View existing fragments Data</button>
+            <br>
+    
+            <div>
+                <div id="displayFragments"></div>
+            </div>
+        </section>
+    
     </section>
+
+    <br>
+    
 
 
 

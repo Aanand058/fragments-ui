@@ -74,10 +74,12 @@ export async function getUserFragmentList(user) {
 }
 
 
+
 export async function getFragmentDataByID(user, id) {
-  console.log('Requesting user fragment data by ID...');
   try {
     if (id != "") {
+      console.log(`Requesting user fragment data by ID...`);
+      console.log(`Fetching ${apiUrl}/v1/fragments/${id}`);
       const res = await fetch(`${apiUrl}/v1/fragments/${id}`, {
         headers: user.authorizationHeaders(),
       });
@@ -91,14 +93,25 @@ export async function getFragmentDataByID(user, id) {
       if (type.includes("text")) {
         const data = await res.text();
         console.log(`Received user fragment by ID: ${id}`, { data });
-
+        document.getElementById("returnedData").innerHTML = data;
+      } else if (type.startsWith("image")) {
+        const data = await res.blob();
+        console.log(`Received user fragment by ID: ${id}`, { data });
+        var image = document.querySelector('img');
+        // see https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
+        var objectURL = URL.createObjectURL(data);
+        image.src = objectURL;
       }
+      if (type.includes("json")) {
+        const data = await res.json();
+        console.log(data);
+      } 
     } else {
-
+      document.getElementById("returnedData").textContent = "Error: ID required";
       console.log("Error: ID required");
     }
-  } catch (error) {
-    console.log(`Unable to call GET /v1/fragments/${id}`, { error });
+  } catch (err) {
+    console.log(`Unable to call GET /v1/fragments/${id}`, { err });
   }
 }
 
@@ -118,7 +131,7 @@ export async function getFragmentInfoByID(user, id) {
 
       const data = await res.json();
       console.log(`Received user fragment info by ID: ${id}`, { data });
-      const type = res.headers.get("Content-Type");
+
       
     } else {
 
@@ -187,3 +200,7 @@ export async function updateFragmentByID(user, data, type, id) {
     console.log(`Unable to  PUT /v1/fragments/${id}`, { err });
   }
 }
+
+
+
+

@@ -6,7 +6,12 @@ import { getUserFragments } from './api';
 const apiUrl = process.env.API_URL;
 
 
-import { getUserFragments, getUserFragmentList, postUserFragments, getFragmentDataByID, getFragmentInfoByID, deleteFragmentDataByID, updateFragmentByID } from './api';
+import {
+  getUserFragments,
+  getUserFragmentList, postUserFragments,
+  getFragmentDataByID, getFragmentInfoByID, deleteFragmentDataByID, updateFragmentByID,
+  viewAllData, viewDataInfo
+} from './api';
 
 async function init() {
   // Get our UI elements
@@ -25,11 +30,8 @@ async function init() {
   const uploadFileBtn = document.querySelector('#uploadImageBtn');
   const updateFileBtn = document.querySelector('#updateImageBtn');
 
-
-
-  //
-  const expandBtn = document.querySelector('#expand');
-  const expandBtn2 = document.querySelector('#expand2');
+  const viewAllDataBtn = document.querySelector('#viewAllData');
+  const viewDataInfoBtn = document.querySelector('#viewDataInfo');
 
 
   // Wire up event handlers to deal with login and logout.
@@ -52,104 +54,19 @@ async function init() {
     return;
   }
 
-
-  // Display fragments
-  expandBtn.onclick = async () => {
-    console.log('Requesting user fragments data...');
-    try {
-      const res = await fetch(`${apiUrl}/v1/fragments?expand=1`, {
-
-        headers: user.authorizationHeaders(),
-      });
-      if (!res.ok) {
-        throw new Error(`${res.status} ${res.statusText}`);
-      }
-      const data = await res.json();
-      console.log('Got user fragments data', { data });
-
-      document.getElementById("displayFragments").innerHTML = "";
-      for (const fragment of data.fragments) {
-        try {
-          const res = await fetch(`${apiUrl}/v1/fragments/${fragment.id}`, {
-
-            headers: user.authorizationHeaders(),
-          });
-          if (!res.ok) {
-            throw new Error(`${res.status} ${res.statusText}`);
-          }
-
-          if (fragment.type.startsWith("text") || fragment.type.startsWith("application")) {
-            const data = await res.text();
-            document.getElementById("displayFragments").appendChild(document.createElement("hr"));
-            document.getElementById("displayFragments").appendChild(document.createTextNode("Fragment id: " + fragment.id));
-            document.getElementById("displayFragments").appendChild(document.createElement("br"));
-            document.getElementById("displayFragments").appendChild(document.createTextNode(data));
-          } else if (fragment.type.startsWith("image")) {
-            const data = await res.arrayBuffer();
-            const rawData = Buffer.from(data);
-            const imageData = new Blob([rawData], { type: fragment.type, });
-            const image = new Image();
-            const reader = new FileReader();
-            reader.readAsDataURL(imageData);
-            reader.addEventListener("load", function () {
-              image.src = reader.result;
-              image.alt = fragment.id;
-            });
-            document.getElementById("displayFragments").appendChild(document.createElement("hr"));
-            document.getElementById("displayFragments").appendChild(document.createTextNode("Fragment id: " + fragment.id));
-            document.getElementById("displayFragments").appendChild(document.createElement("br"));
-            document.getElementById("displayFragments").appendChild(image);
-          }
-        } catch (err) {
-          console.error("Unable to call GET /v1/fragments/:id", { err });
-        }
-      }
-    } catch (err) {
-      console.error('Unable to call GET /v1/fragment', { err });
-    }
+  getByIdButton.onclick = () => {
+    let id = document.querySelector('#id').value;
+    getFragmentDataByID(user, id);
   }
 
-  expandBtn2.onclick = async () => {
-    console.log('Requesting user fragments data...');
-    try {
-      const res = await fetch(`${apiUrl}/v1/fragments?expand=1`, {
+  viewAllDataBtn.onclick = () => {
+    viewAllData(user);
 
-        headers: user.authorizationHeaders(),
-      });
-      if (!res.ok) {
-        throw new Error(`${res.status} ${res.statusText}`);
-      }
-      const data = await res.json();
-      console.log('Got user fragments metadata', { data });
-
-      document.getElementById("displayFragments").innerHTML = "";
-      for (const fragment of data.fragments) {
-        try {
-          const res = await fetch(`${apiUrl}/v1/fragments/${fragment.id}/info`, {
-
-            headers: user.authorizationHeaders(),
-          });
-          if (!res.ok) {
-            throw new Error(`${res.status} ${res.statusText}`);
-          }
-
-          const data = await res.text();
-          document.getElementById("displayFragments").appendChild(document.createElement("hr"));
-          document.getElementById("displayFragments").appendChild(document.createTextNode("Fragment id: " + fragment.id));
-          document.getElementById("displayFragments").appendChild(document.createElement("br"));
-          document.getElementById("displayFragments").appendChild(document.createTextNode(data));
-        } catch (err) {
-          console.error("Unable to call GET /v1/fragments/:id", { err });
-        }
-      }
-    } catch (err) {
-      console.error('Unable to call GET /v1/fragment', { err });
-    }
   }
 
-
-
-
+  viewDataInfoBtn.onclick = () => {
+    viewDataInfo(user);
+  }
 
   uploadFileBtn.onclick = () => {
     let data = document.getElementById("file").files[0];
